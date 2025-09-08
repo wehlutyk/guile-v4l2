@@ -1,7 +1,0 @@
-(use-modules (oop goops) (aiscm magick) (aiscm xorg) (aiscm core))
-(define image (read-image "shuttle.jpg"))
-(define width (cadr (shape image)))
-(define height (car (shape image)))
-(define left (crop (list height (/ width 2)) image))
-(define right (dump (list 0 (/ width 2)) image))
-(show (rgb (red left) (/ (green right) 2) (/ (blue right) 2)))

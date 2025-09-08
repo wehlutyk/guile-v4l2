@@ -98,7 +98,7 @@ SCM magick_write_image(SCM scm_format, SCM scm_shape, SCM scm_mem, SCM scm_file_
 
 void init_magick(void)
 {
-  MagickCoreGenesis("libguile-magick", MagickTrue);
+  MagickCoreGenesis("libguile-aiscm-magick", MagickTrue);
   scm_c_define_gsubr("magick-read-image" , 1, 0, 0, SCM_FUNC(magick_read_image ));
   scm_c_define_gsubr("magick-write-image", 4, 0, 0, SCM_FUNC(magick_write_image));
 }

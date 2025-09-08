@@ -28,10 +28,10 @@ AC_CHECK_PROG(CONVERT,convert,convert,no)
 if test "x$CONVERT" = xno; then
   AC_MSG_ERROR([Could not find 'convert' in path.])
 fi
-AC_CHECK_PROG(PROTOCC,protoc-c,protoc-c,no)
-if test "x$PROTOCC" = xno; then
-  AC_MSG_ERROR([Could not find 'protoc-c' in path.])
-fi
+dnl AC_CHECK_PROG(PROTOCC,protoc-c,protoc-c,no)
+dnl if test "x$PROTOCC" = xno; then
+dnl   AC_MSG_ERROR([Could not find 'protoc-c' in path.])
+dnl fi
 AC_MSG_CHECKING([wether C compiler works])
 AC_TRY_LINK([],[],[AC_MSG_RESULT([yes])],[AC_MSG_ERROR([Failed to compile and link C program.])])
 AC_CHECK_HEADERS([assert.h stdio.h stdlib.h string.h])
@@ -53,8 +53,8 @@ PKG_CHECK_MODULES(SWRESAMPLE, libswresample >= 1.1.100,
   [PKG_CHECK_MODULES(AVRESAMPLE, libavresample >= 1.0.1)])
 AC_SUBST(SWRESAMPLE_CFLAGS)
 AC_SUBST(SWRESAMPLE_LIBS)
-AC_SUBST(AVRESAMPLE_CFLAGS)
-AC_SUBST(AVRESAMPLE_LIBS)
+dnl AC_SUBST(AVRESAMPLE_CFLAGS)
+dnl AC_SUBST(AVRESAMPLE_LIBS)
 
 PKG_CHECK_MODULES(MJPEG, mjpegtools >= 1.9.0)
 AC_SUBST(MJPEG_CFLAGS)
@@ -82,18 +82,18 @@ AC_TRY_LINK([#include <X11/xpm.h>],
             [AC_MSG_ERROR([Could not locate Xpm library])])
 LIBS="$old_LIBS"
 
-old_LIBS="$LIBS"
-old_CFLAGS="$CFLAGS"
-LIBS="$LIBS -lneo_utl"
-CFLAGS="$CFLAGS -I/usr/local/include/ClearSilver -I/usr/include/ClearSilver"
-AC_MSG_CHECKING([for ClearSilver library])
-AC_TRY_LINK([#include <ClearSilver.h>],
-            [hdf_init(NULL)],
-            [AC_MSG_RESULT([yes])],
-            [AC_MSG_RESULT([no])]
-            [AC_MSG_ERROR([Could not locate ClearSilver library])])
-LIBS="$old_LIBS"
-CFLAGS="$old_CFLAGS"
+dnl old_LIBS="$LIBS"
+dnl old_CFLAGS="$CFLAGS"
+dnl LIBS="$LIBS -lneo_utl"
+dnl CFLAGS="$CFLAGS -I/usr/local/include/ClearSilver -I/usr/include/ClearSilver"
+dnl AC_MSG_CHECKING([for ClearSilver library])
+dnl AC_TRY_LINK([#include <ClearSilver.h>],
+dnl             [hdf_init(NULL)],
+dnl             [AC_MSG_RESULT([yes])],
+dnl             [AC_MSG_RESULT([no])]
+dnl             [AC_MSG_ERROR([Could not locate ClearSilver library])])
+dnl LIBS="$old_LIBS"
+dnl CFLAGS="$old_CFLAGS"
 
 old_LIBS="$LIBS"
 LIBS="$LIBS -lgc"
@@ -105,25 +105,15 @@ AC_TRY_LINK([#include <gc.h>],
             [AC_MSG_ERROR([Could not locate Boehm Garbage Collector library])])
 LIBS="$old_LIBS"
 
-old_LIBS="$LIBS"
-LIBS="$LIBS -lprotobuf-c"
-AC_MSG_CHECKING([for Protocol Buffer library])
-AC_TRY_LINK([#include <protobuf-c/protobuf-c.h>],
-            [protobuf_c_message_unpack(NULL, NULL, 0, NULL)],
-            [AC_MSG_RESULT([yes])],
-            [AC_MSG_RESULT([no])]
-            [AC_MSG_ERROR([Could not locate Protocol Buffer library])])
-LIBS="$old_LIBS"
-
-old_LIBS="$LIBS"
-LIBS="$LIBS -ltensorflow"
-AC_MSG_CHECKING([for Tensorflow library])
-AC_TRY_LINK([#include <tensorflow/c/c_api.h>],
-            [TF_GetAllOpList()],
-            [AC_MSG_RESULT([yes])],
-            [AC_MSG_RESULT([no])]
-            [AC_MSG_ERROR([Could not locate Tensorflow C library])])
-LIBS="$old_LIBS"
+dnl old_LIBS="$LIBS"
+dnl LIBS="$LIBS -lprotobuf-c"
+dnl AC_MSG_CHECKING([for Protocol Buffer library])
+dnl AC_TRY_LINK([#include <protobuf-c/protobuf-c.h>],
+dnl             [protobuf_c_message_unpack(NULL, NULL, 0, NULL)],
+dnl             [AC_MSG_RESULT([yes])],
+dnl             [AC_MSG_RESULT([no])]
+dnl             [AC_MSG_ERROR([Could not locate Protocol Buffer library])])
+dnl LIBS="$old_LIBS"
 
 AC_PATH_XTRA
 if test "x$no_x" = xyes; then
@@ -180,15 +170,13 @@ prefix                               : $prefix
 debug mode                           : $enable_debug"
 
 AC_OUTPUT(Makefile
-          tensorflow/Makefile
-          tensorflow/core/Makefile
-          tensorflow/core/framework/Makefile
           aiscm/Makefile
-          tests/Makefile
-          tests/integration/Makefile
-          tests/fixtures/Makefile
-          bench/Makefile
-          doc/Makefile
-          doc/index.md,
+          dnl tests/Makefile
+          dnl tests/integration/Makefile
+          dnl tests/fixtures/Makefile
+          dnl bench/Makefile
+          dnl doc/Makefile
+          dnl doc/index.md
+          ,
           echo "$info",
           info="$info")
