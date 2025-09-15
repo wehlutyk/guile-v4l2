@@ -46,8 +46,9 @@
     (arguments
      (list
       #:make-flags
+      ;; #~(list "GUILE_AUTO_COMPILE=0") ;; TODO use?
       #~(list (string-append "GUILE_CACHE=" #$output "/lib/guile/3.0/site-ccache")
-              (string-append "GUILE_EXT=" #$output "/lib/guile/3.0/extensions")
+              (string-append "GUILE_EXT=" #$output "/lib/guile/3.0/extensions")  ;; TODO needed?
               (string-append "GUILE_SITE=" #$output "/share/guile/site/3.0"))
       #:phases
       '(modify-phases %standard-phases
@@ -96,7 +97,19 @@
             (setenv "AR" "llvm-ar")
             (setenv "NM" "llvm-nm")
             (setenv "CC" "clang")
-            (setenv "CXX" "clang++"))))))
+            (setenv "CXX" "clang++")))
+        (add-after 'build 'load-extension
+          (lambda* (#:key outputs #:allow-other-keys)
+            (substitute* (find-files "." ".*\\.scm")
+              (("\\(load-extension \"libguile-aiscm-(.*)\" *\"(.*)\"\\)" _ a o)
+               (string-append
+                (object->string
+                 `(or (false-if-exception (load-extension ,(string-append "libguile-aiscm-" a) ,o))
+                      (load-extension ,(string-append
+                                        (assoc-ref outputs "out")
+                                        "/lib/guile/3.0/extensions/libguile-aiscm-"
+                                        a ".so")
+                                      ,o)))))))))))
     (inputs
      (list clearsilver
            ffmpeg-4
